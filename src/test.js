@@ -12,11 +12,15 @@ const eventos = [
 ]
 const tInicio = Date.now();
 
-//Callbacks anidados
+for (let i = 0; i < eventos.length; i++) {
+  setTimeout(() => {
+    const tReal = Date.now();
+    console.log('Evento disparado:', eventos[i].tipo);
+    const tiempoReal = tReal - tInicio;
+    eventos[i].real = tiempoReal;
+  }, eventos[i].programado);
+}
 
-
-
-//Impresión de eventos disparados
 setTimeout(() => {
   console.log('Todos los eventos han sido disparados:');
   console.table(eventos);
