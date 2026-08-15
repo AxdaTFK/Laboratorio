@@ -1,0 +1,122 @@
+//Simulador de evento
+
+const eventos = [
+  { id: 1, tipo: 'iniciosesion', programado: 500, real: null },
+  { id: 2, tipo: 'descarga', programado: 1200, real: null },
+  { id: 3, tipo: 'notificacion', programado: 1800, real: null },
+  { id: 4, tipo: 'cierre', programado: 3000, real: null },
+  { id: 5, tipo: 'actualizacion', programado: 2400, real: null },
+  { id: 6, tipo: 'error', programado: 2500, real: null },
+  { id: 7, tipo: 'mensaje', programado: 3200, real: null },
+  { id: 8, tipo: 'alerta', programado: 1500, real: null },
+]
+const tInicio = Date.now();
+
+//Promesas 
+function promiseiniciosesion(){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const tReal = Date.now();
+            console.log('Evento disparado:', eventos[0].tipo);
+            const tiempoReal = tReal - tInicio;
+            eventos[0].real = tiempoReal;
+            resolve({ id: eventos[0].id, tipo: eventos[0].tipo});
+        }, eventos[0].programado);
+})}
+
+function promisedescarga(){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const tReal = Date.now();
+            console.log('Evento disparado:', eventos[1].tipo);
+            const tiempoReal = tReal - tInicio;
+            eventos[1].real = tiempoReal;
+            resolve({ id: eventos[1].id, tipo: eventos[1].tipo});
+        }, eventos[1].programado);
+})}
+
+function promisenotificacion(){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const tReal = Date.now();
+            console.log('Evento disparado:', eventos[2].tipo);
+            const tiempoReal = tReal - tInicio;
+            eventos[2].real = tiempoReal;
+            resolve({ id: eventos[2].id, tipo: eventos[2].tipo});
+        }, eventos[2].programado);
+})}
+
+function promisecierre(){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const tReal = Date.now();
+            console.log('Evento disparado:', eventos[3].tipo);
+            const tiempoReal = tReal - tInicio;
+            eventos[3].real = tiempoReal;
+            resolve({ id: eventos[3].id, tipo: eventos[3].tipo});
+        }, eventos[3].programado);
+})}
+
+function promiseactualizacion(){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const tReal = Date.now();
+            console.log('Evento disparado:', eventos[4].tipo);
+            const tiempoReal = tReal - tInicio;
+            eventos[4].real = tiempoReal;
+            resolve({ id: eventos[4].id, tipo: eventos[4].tipo});
+        }, eventos[4].programado);
+})}
+
+function promiseerror(){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const tReal = Date.now();
+            console.log('Evento disparado:', eventos[5].tipo);
+            const tiempoReal = tReal - tInicio;
+            eventos[5].real = tiempoReal;
+            resolve({ id: eventos[5].id, tipo: eventos[5].tipo});
+        }, eventos[5].programado);
+})}
+
+function promisemensaje(){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const tReal = Date.now();
+            console.log('Evento disparado:', eventos[6].tipo);
+            const tiempoReal = tReal - tInicio;
+            eventos[6].real = tiempoReal;
+            resolve({ id: eventos[6].id, tipo: eventos[6].tipo});
+        }, eventos[6].programado);
+})}
+
+function promisealerta(){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const tReal = Date.now();
+            console.log('Evento disparado:', eventos[7].tipo);
+            const tiempoReal = tReal - tInicio;
+            eventos[7].real = tiempoReal;
+            resolve({ id: eventos[7].id, tipo: eventos[7].tipo});
+        }, eventos[7].programado);
+})}
+
+promiseiniciosesion().then(() => {
+    promisedescarga().then(() => {
+        promisenotificacion().then(() => {
+            promisecierre().then(() => {
+                promiseactualizacion().then(() => {
+                    promiseerror().then(() => {
+                        promisemensaje().then(() => {
+                            promisealerta().then(() => {
+                                    //Impresión de eventos disparados
+                                    console.log('Todos los eventos han sido disparados:');
+                                    console.table(eventos);
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
+});
