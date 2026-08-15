@@ -1,16 +1,18 @@
-const myCallback = (error, data) => {
-  if (error) {
-    console.error('Error:', error);
-    return;
-  }
-  console.log('Resultado:', data);
+//Simulador de evento
+
+const eventos = [
+  {id: 1, tipo: 'iniciosesion', programado: 500, real: null},
+  {id: 2, tipo: 'descarga', programado: 1200, real: null},
+  {id: 3, tipo: 'notificacion', programado: 1800, real: null},
+  {id: 4, tipo: 'cierre', programado: 3000, real: null},
+  {id: 5, tipo: 'actualizacion', programado: 2000, real: null},
+  {id: 6, tipo: 'error', programado: 2500, real: null},
+  {id: 7, tipo: 'mensaje', programado: 7000, real: null},
+  {id: 8, tipo: 'alerta', programado: 1500, real: null},
+]
+
+for(let i = 0; i < eventos.length; i++) {
+  setTimeout(() => {
+    console.log('Evento disparado:', eventos[i].tipo)
+  }, eventos[i].programado);
 };
-
-const ejecutarCallback = (callback) => {
-  const resultado = 'Este es el resultado del callback';
-  callback(null, resultado);
-};
-
-ejecutarCallback(myCallback);
-
-module.exports = { myCallback, ejecutarCallback };
