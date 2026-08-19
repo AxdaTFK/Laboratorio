@@ -1,15 +1,15 @@
 //Simulador de evento
-const tInicio = Date.now();
+const tReferencia = Date.now();
 
 const eventos = [
-  { id: 1, tipo: 'iniciosesion', programado: tInicio + 500, real: null },
-  { id: 2, tipo: 'descarga', programado: tInicio + 1200, real: null },
-  { id: 3, tipo: 'notificacion', programado: tInicio + 330, real: null },
-  { id: 4, tipo: 'cierre', programado: tInicio + 450, real: null },
-  { id: 5, tipo: 'actualizacion', programado: tInicio + 1000, real: null },
-  { id: 6, tipo: 'error', programado: tInicio + 650, real: null },
-  { id: 7, tipo: 'mensaje', programado: tInicio + 220, real: null },
-  { id: 8, tipo: 'alerta', programado: tInicio + 580, real: null },
+  { id: 1, tipo: 'iniciosesion', programado: tReferencia + 500, real: null },
+  { id: 2, tipo: 'descarga', programado: tReferencia + 1200, real: null },
+  { id: 3, tipo: 'notificacion', programado: tReferencia + 330, real: null },
+  { id: 4, tipo: 'cierre', programado: tReferencia + 450, real: null },
+  { id: 5, tipo: 'actualizacion', programado: tReferencia + 1000, real: null },
+  { id: 6, tipo: 'error', programado: tReferencia + 650, real: null },
+  { id: 7, tipo: 'mensaje', programado: tReferencia + 220, real: null },
+  { id: 8, tipo: 'alerta', programado: tReferencia + 580, real: null },
 ]
 
 //Callbacks anidados
