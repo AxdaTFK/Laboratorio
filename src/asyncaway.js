@@ -141,72 +141,54 @@ function promisealerta() {
     });
 }
 
-//Promesas con then
-const registro = [];
+//AsyncAways
 
-promiseinicioSesion()
-    .then((evento1) => {
-        registro.push(evento1);
-        return promisedescarga();
+async function runEventos() {
+    const registro = [];
+
+    registro.push(await promiseinicioSesion());
+    registro.push(await promisedescarga());
+    registro.push(await promisenotificacion());
+    registro.push(await promisecierre());
+    registro.push(await promiseactualizacion());
+    registro.push(await promiseerror());
+    registro.push(await promisemensaje());
+    registro.push(await promisealerta());
+
+    console.log('Todos los eventos han sido disparados:');
+    console.table(registro);
+
+    //Latencia
+    const Latencia = registro.reduce((acum, actual) => {
+        return acum + (actual.real - actual.programado);
+    }, 0);
+
+    const PromLatencia = Latencia / registro.length;
+    console.log('Latencia promedio:', PromLatencia, 'ms');
+
+    //Desvíos mayores a 200ms
+    const filtroEventos = registro.filter(eventos => {
+        return(eventos.real - eventos.programado) > 200;
     })
-    .then((evento2) => {
-        registro.push(evento2);
-        return promisenotificacion();
-    })
-    .then((evento3) => {
-        registro.push(evento3);
-        return promisecierre();
-    })
-    .then((evento4) => {
-        registro.push(evento4);
-        return promiseactualizacion();
-    })
-    .then((evento5) => {
-        registro.push(evento5);
-        return promiseerror();
-    })
-    .then((evento6) => {
-        registro.push(evento6);
-        return promisemensaje();
-    })
-    .then((evento7) => {
-        registro.push(evento7);
-        return promisealerta();
-    })
-    .then((evento8) => {
-        registro.push(evento8);
-        console.log('Todos los eventos han sido disparados:');
-        console.table(registro);
-        //Latencia
-        const Latencia = registro.reduce((acum, actual) => {
-            return acum + (actual.real - actual.programado);
-        }, 0);
+    console.log('Eventos de desvio mayor a 200');
+    console.table(filtroEventos);
 
-        const PromLatencia = Latencia / registro.length;
-        console.log('Latencia promedio:', PromLatencia, 'ms');
+    const PrimerDesviacion = registro.find(eventos =>{
+        return eventos.real - eventos.programado > 200;
+    });
 
-        //Desvíos mayores a 50ms
-        const filtroEventos = registro.filter(eventos => {
-            return (eventos.real - eventos.programado) > 50;
-        })
-        console.log('Eventos de desvio mayor a 50');
-        console.table(filtroEventos);
+    //Evento fueras de orden
+    let maxScheduleSoFar = -Infinity;
 
-        const PrimerDesviacion = registro.find(eventos => {
-            return eventos.real - eventos.programado > 50;
-        });
+    const FOEvento = registro.find((eventos =>{
+        if(eventos.programado < maxScheduleSoFar){
+            return true;
+        }
 
-        //Evento fueras de orden
-        let maxScheduleSoFar = -Infinity;
+        maxScheduleSoFar = Math.max(maxScheduleSoFar, eventos.programado);
+    }));
 
-        const FOEvento = registro.find((eventos => {
-            if (eventos.programado < maxScheduleSoFar) {
-                return true;
-            }
+    console.log('Primer evento fuera de orden:', FOEvento);
+}
 
-            maxScheduleSoFar = Math.max(maxScheduleSoFar, eventos.programado);
-        }));
-
-        console.log('Primer evento fuera de orden:', FOEvento);
-    })
-
+runEventos();
