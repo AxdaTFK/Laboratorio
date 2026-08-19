@@ -1,112 +1,109 @@
 //Simulador de evento
+const tInicio = Date.now();
 
 const eventos = [
-  { id: 1, tipo: 'iniciosesion', programado: 500, real: null },
-  { id: 2, tipo: 'descarga', programado: 1200, real: null },
-  { id: 3, tipo: 'notificacion', programado: 1800, real: null },
-  { id: 4, tipo: 'cierre', programado: 3000, real: null },
-  { id: 5, tipo: 'actualizacion', programado: 2400, real: null },
-  { id: 6, tipo: 'error', programado: 2500, real: null },
-  { id: 7, tipo: 'mensaje', programado: 3200, real: null },
-  { id: 8, tipo: 'alerta', programado: 1500, real: null },
+  { id: 1, tipo: 'iniciosesion', programado: tInicio + 500, real: null },
+  { id: 2, tipo: 'descarga', programado: tInicio + 1200, real: null },
+  { id: 3, tipo: 'notificacion', programado: tInicio + 330, real: null },
+  { id: 4, tipo: 'cierre', programado: tInicio + 450, real: null },
+  { id: 5, tipo: 'actualizacion', programado: tInicio + 1000, real: null },
+  { id: 6, tipo: 'error', programado: tInicio + 650, real: null },
+  { id: 7, tipo: 'mensaje', programado: tInicio + 220, real: null },
+  { id: 8, tipo: 'alerta', programado: tInicio + 580, real: null },
 ]
-const tInicio = Date.now();
 
 //Callbacks anidados
 function getinicioSesion(callback) {
   setTimeout(() => {
-    const tReal = Date.now();
+    eventos[0].real = Date.now();
     console.log('Evento disparado:', eventos[0].tipo);
-    const tiempoReal = tReal - tInicio;
-    eventos[0].real = tiempoReal;
-    callback({ id: eventos[0].id, tipo: eventos[0].tipo });
-  }, eventos[0].programado);
+    callback(eventos[0]);
+  }, 500);
 }
 
 function getDescarga(callback) {
   setTimeout(() => {
-    const tReal = Date.now();
+    eventos[1].real = Date.now();
     console.log('Evento disparado:', eventos[1].tipo);
-    const tiempoReal = tReal - tInicio;
-    eventos[1].real = tiempoReal;
-    callback({ id: eventos[1].id, tipo: eventos[1].tipo });
-  }, eventos[1].programado);
+    callback(eventos[1]);
+  }, 1200);
 }
 
 function getNotificacion(callback) {
   setTimeout(() => {
-    const tReal = Date.now();
+    eventos[2].real = Date.now();
     console.log('Evento disparado:', eventos[2].tipo);
-    const tiempoReal = tReal - tInicio;
-    eventos[2].real = tiempoReal;
-    callback({ id: eventos[2].id, tipo: eventos[2].tipo });
-  }, eventos[2].programado);
+    callback(eventos[2]);
+  }, 330);
 }
 
 function getCierre(callback) {
   setTimeout(() => {
-    const tReal = Date.now();
+    eventos[3].real = Date.now();
     console.log('Evento disparado:', eventos[3].tipo);
-    const tiempoReal = tReal - tInicio;
-    eventos[3].real = tiempoReal;
-    callback({ id: eventos[3].id, tipo: eventos[3].tipo });
-  }, eventos[3].programado);
+    callback(eventos[3]);
+  }, 450);
 }
 
 function getActualizacion(callback) {
   setTimeout(() => {
-    const tReal = Date.now();
+    eventos[4].real = Date.now();
     console.log('Evento disparado:', eventos[4].tipo);
-    const tiempoReal = tReal - tInicio;
-    eventos[4].real = tiempoReal;
-    callback({ id: eventos[4].id, tipo: eventos[4].tipo });
-  }, eventos[4].programado);
+    callback(eventos[4]);
+  }, 1000);
 }
 
 function getError(callback) {
   setTimeout(() => {
-    const tReal = Date.now();
+    eventos[5].real = Date.now();
     console.log('Evento disparado:', eventos[5].tipo);
-    const tiempoReal = tReal - tInicio;
-    eventos[5].real = tiempoReal;
-    callback({ id: eventos[5].id, tipo: eventos[5].tipo });
-  }, eventos[5].programado);
+    callback(eventos[5]);
+  }, 650);
 }
 
 function getMensaje(callback) {
   setTimeout(() => {
-    const tReal = Date.now();
+    eventos[6].real = Date.now();
     console.log('Evento disparado:', eventos[6].tipo);
-    const tiempoReal = tReal - tInicio;
-    eventos[6].real = tiempoReal;
-    callback({ id: eventos[6].id, tipo: eventos[6].tipo });
-  }, eventos[6].programado);
+    callback(eventos[6]);
+  }, 220);
 }
 
 function getAlerta(callback) {
   setTimeout(() => {
-    const tReal = Date.now();
+    eventos[7].real = Date.now();
     console.log('Evento disparado:', eventos[7].tipo);
-    const tiempoReal = tReal - tInicio;
-    eventos[7].real = tiempoReal;
-    callback({ id: eventos[7].id, tipo: eventos[7].tipo });
-  }, eventos[7].programado);
+    callback(eventos[7]);
+  }, 580);
 }
 
-//Callbacks anidados 
-getinicioSesion((evento) => {
-  getDescarga((evento) => {
-    getNotificacion((evento) => {
-      getCierre((evento) => {
-        getActualizacion((evento) => {
-          getError((evento) => {
-            getMensaje((evento) => {
-              getAlerta((evento) => {
-                setTimeout(() => {
-                  //Impresión de eventos disparados
-                  console.log('Todos los eventos han sido disparados:');
-                  console.table(eventos);
-                }, 3500);
+//Callbacks anidados - Callbacks Hell
+const registro = [];
+
+getinicioSesion((evento1) => {
+  registro.push(evento1);
+  getDescarga((evento2) => {
+    registro.push(evento2);
+    getNotificacion((evento3) => {
+      registro.push(evento3);
+      getCierre((evento4) => {
+        registro.push(evento4);
+        getActualizacion((evento5) => {
+          registro.push(evento5);
+          getError((evento6) => {
+            registro.push(evento6);
+            getMensaje((evento7) => {
+              registro.push(evento7);
+              getAlerta((evento8) => {
+                registro.push(evento8);
+                console.log('Todos los eventos han sido disparados:');
+                console.table(registro);
+                const Latencia = registro.reduce((acum, actual) => {
+                  return acum + (actual.real - actual.programado);
+                }, 0);
+
+                const PromLatencia = Latencia / registro.length;
+                console.log('Latencia promedio:', PromLatencia, 'ms');
               });
             });
           });
@@ -115,3 +112,4 @@ getinicioSesion((evento) => {
     });
   });
 });
+
