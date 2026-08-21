@@ -2,14 +2,14 @@
 const tReferencia = Date.now();
 
 const eventos = [
-  { id: 1, tipo: 'iniciosesion', programado: tReferencia + 500, real: null },
-  { id: 2, tipo: 'descarga', programado: tReferencia + 1200, real: null },
-  { id: 3, tipo: 'notificacion', programado: tReferencia + 330, real: null },
-  { id: 4, tipo: 'cierre', programado: tReferencia + 450, real: null },
-  { id: 5, tipo: 'actualizacion', programado: tReferencia + 1000, real: null },
-  { id: 6, tipo: 'error', programado: tReferencia + 650, real: null },
-  { id: 7, tipo: 'mensaje', programado: tReferencia + 220, real: null },
-  { id: 8, tipo: 'alerta', programado: tReferencia + 580, real: null },
+  { id: 1, tipo: 'iniciosesion', programado: tReferencia + 500},
+  { id: 2, tipo: 'descarga', programado: tReferencia + 1200},
+  { id: 3, tipo: 'notificacion', programado: tReferencia + 330},
+  { id: 4, tipo: 'cierre', programado: tReferencia + 450},
+  { id: 5, tipo: 'actualizacion', programado: tReferencia + 1000},
+  { id: 6, tipo: 'error', programado: tReferencia + 650},
+  { id: 7, tipo: 'mensaje', programado: tReferencia + 220},
+  { id: 8, tipo: 'alerta', programado: tReferencia + 580},
 ]
 
 //Callbacks anidados
