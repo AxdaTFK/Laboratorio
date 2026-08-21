@@ -1,135 +1,115 @@
 const { AverageLatency, getEventsAboveLatency, getEventsAboveDeviation, getOutOfOrderEvents } = require("./Resultados.js");
-//Simulador de evento
-const tReferencia = Date.now();
+const results = [];
 
-const eventos = [
-  { id: 1, tipo: 'iniciosesion', programado: tReferencia + 500},
-  { id: 2, tipo: 'descarga', programado: tReferencia + 1200},
-  { id: 3, tipo: 'notificacion', programado: tReferencia + 330},
-  { id: 4, tipo: 'cierre', programado: tReferencia + 450},
-  { id: 5, tipo: 'actualizacion', programado: tReferencia + 1000},
-  { id: 6, tipo: 'error', programado: tReferencia + 650},
-  { id: 7, tipo: 'mensaje', programado: tReferencia + 220},
-  { id: 8, tipo: 'alerta', programado: tReferencia + 580},
-]
+//Simulador de evento 
+const startTime = Date.now();
 
-//Callbacks anidados
-function getinicioSesion(callback) {
+const events = [
+  { id: 1, type: "logIn", Stime: 500, },
+  { id: 2, type: "download", Stime: 1000, },
+  { id: 3, type: "notification", Stime: 1800, },
+  { id: 4, type: "closing", Stime: 1500, },
+  { id: 5, type: "update", Stime: 2000, },
+  { id: 6, type: "error", Stime: 800, },
+  { id: 7, type: "message", Stime: 1200, },
+  { id: 8, type: "alert", Stime: 600, },
+];
+
+function getlogIn(callback) {
   setTimeout(() => {
-    eventos[0].real = Date.now();
-    console.log('Evento disparado:', eventos[0].tipo);
-    callback(eventos[0]);
+    events[0].realTime = Date.now() - startTime;
+    console.log('Evento disparado:', events[0].type);
+    callback(events[0]);
   }, 500);
 }
 
-function getDescarga(callback) {
+function getdownload(callback) {
   setTimeout(() => {
-    eventos[1].real = Date.now();
-    console.log('Evento disparado:', eventos[1].tipo);
-    callback(eventos[1]);
-  }, 1200);
-}
-
-function getNotificacion(callback) {
-  setTimeout(() => {
-    eventos[2].real = Date.now();
-    console.log('Evento disparado:', eventos[2].tipo);
-    callback(eventos[2]);
-  }, 330);
-}
-
-function getCierre(callback) {
-  setTimeout(() => {
-    eventos[3].real = Date.now();
-    console.log('Evento disparado:', eventos[3].tipo);
-    callback(eventos[3]);
-  }, 450);
-}
-
-function getActualizacion(callback) {
-  setTimeout(() => {
-    eventos[4].real = Date.now();
-    console.log('Evento disparado:', eventos[4].tipo);
-    callback(eventos[4]);
+    events[1].realTime = Date.now() - startTime;
+    console.log('Evento disparado:', events[1].type);
+    callback(events[1]);
   }, 1000);
 }
 
-function getError(callback) {
+function getnotification(callback) {
   setTimeout(() => {
-    eventos[5].real = Date.now();
-    console.log('Evento disparado:', eventos[5].tipo);
-    callback(eventos[5]);
-  }, 650);
+    events[2].realTime = Date.now() - startTime;
+    console.log('Evento disparado:', events[2].type);
+    callback(events[2]);
+  }, 1800);
 }
 
-function getMensaje(callback) {
+function getclosing(callback) {
   setTimeout(() => {
-    eventos[6].real = Date.now();
-    console.log('Evento disparado:', eventos[6].tipo);
-    callback(eventos[6]);
-  }, 220);
+    events[3].realTime = Date.now() - startTime;
+    console.log('Evento disparado:', events[3].type);
+    callback(events[3]);
+  }, 1500);
 }
 
-function getAlerta(callback) {
+function getupdate(callback) {
   setTimeout(() => {
-    eventos[7].real = Date.now();
-    console.log('Evento disparado:', eventos[7].tipo);
-    callback(eventos[7]);
-  }, 580);
+    events[4].realTime = Date.now() - startTime;
+    console.log('Evento disparado:', events[4].type);
+    callback(events[4]);
+  }, 2000);
 }
 
-//Callbacks anidados - Callbacks Hell
-const registro = [];
+function geterror(callback) {
+  setTimeout(() => {
+    events[5].realTime = Date.now() - startTime;
+    console.log('Evento disparado:', events[5].type);
+    callback(events[5]);
+  }, 800);
+}
 
-getinicioSesion((evento1) => {
-  registro.push(evento1);
-  getDescarga((evento2) => {
-    registro.push(evento2);
-    getNotificacion((evento3) => {
-      registro.push(evento3);
-      getCierre((evento4) => {
-        registro.push(evento4);
-        getActualizacion((evento5) => {
-          registro.push(evento5);
-          getError((evento6) => {
-            registro.push(evento6);
-            getMensaje((evento7) => {
-              registro.push(evento7);
-              getAlerta((evento8) => {
-                registro.push(evento8);
-                console.log('Todos los eventos han sido disparados:');
-                console.table(registro);
-                //Latencia
-                const Latencia = registro.reduce((acum, actual) => {
-                  return acum + (actual.real - actual.programado);
-                }, 0);
+function getmessage(callback) {
+  setTimeout(() => {
+    events[6].realTime = Date.now()- startTime;
+    console.log('Evento disparado:', events[6].type);
+    callback(events[6]);
+  }, 1200);
+}
 
-                const PromLatencia = Latencia / registro.length;
-                console.log('Latencia promedio:', PromLatencia, 'ms');
+function getalert(callback) {
+  setTimeout(() => {
+    events[7].realTime = Date.now()- startTime;
+    console.log('Evento disparado:', events[7].type);
+    callback(events[7]);
+  }, 600);
+}
 
-                //Desvíos mayores a 50ms
-                const filtroEventos = registro.filter(eventos => {
-                  return (eventos.real - eventos.programado) > 50;
-                })
-                console.log('Eventos de desvio mayor a 50');
-                console.table(filtroEventos);
+//Callbacks anidados - Callbacks Hell 
+getlogIn((event1) => {
+  results.push(event1);
+  getdownload((event2) => {
+    results.push(event2);
+    getnotification((event3) => {
+      results.push(event3);
+      getclosing((event4) => {
+        results.push(event4);
+        getupdate((event5) => {
+          results.push(event5);
+          geterror((event6) => {
+            results.push(event6);
+            getmessage((event7) => {
+              results.push(event7);
+              getalert((event8) => {
+                results.push(event8);
 
-                const PrimerDesviacion = registro.find(eventos => {
-                  return eventos.real - eventos.programado > 50;
-                });
-
-                //Evento fueras de orden
-                let maxScheduleSoFar = -Infinity;
-
-                const FOEvento = registro.find((eventos => {
-                  if (eventos.programado < maxScheduleSoFar) {
-                    return true;
-                  }
-
-                  maxScheduleSoFar = Math.max(maxScheduleSoFar, eventos.programado);
-                }));
-
-                console.log('Primer evento fuera de orden:', FOEvento);
+                console.log("Bitacora");
+                console.table(results);
+                const averageLatency = AverageLatency(results);
+                console.log("Latencia Promedio:", averageLatency);
+                const aboveLatencyEvents = getEventsAboveLatency(results, 180);
+                console.log("Eventos por encima de la latencia:",);
+                console.table(aboveLatencyEvents);
+                const aboveDeviationEvents = getEventsAboveDeviation(results, 50);
+                console.log("Eventos por encima de la desviación:",);
+                console.table(aboveDeviationEvents);
+                const outOfOrderEvents = getOutOfOrderEvents(results);
+                console.log("Eventos fuera de orden:",);
+                console.table(outOfOrderEvents);
               });
             });
           });
@@ -138,4 +118,3 @@ getinicioSesion((evento1) => {
     });
   });
 });
-
