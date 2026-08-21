@@ -4,59 +4,28 @@ const results = [];
 const startTime = Date.now();
 
 const events = [
-  {
-    number: 1,
-    type: "Large Event",
-    time: 3000,
-  },
-  {
-    number: 2,
-    type: "Large Event",
-    time: 1000,
-  },
-  {
-    number: 3,
-    type: "Large Event",
-    time: 7000,
-  },
-  {
-    number: 4,
-    type: "Large Event",
-    time: 5000,
-  },
-  {
-    number: 5,
-    type: "Large Event",
-    time: 8000,
-  },
-  {
-    number: 6,
-    type: "Large Event",
-    time: 100,
-  },
-  {
-    number: 7,
-    type: "Large Event",
-    time: 300,
-  },
-  {
-    number: 8,
-    type: "Large Event",
-    time: 800,
-  },
+  { id: 1, type: "LogIn", Stime: 500, },
+  { id: 2, type: "Download", Stime: 1000, },
+  { id: 3, type: "notification", Stime: 1800, },
+  { id: 4, type: "closing", Stime: 1500, },
+  { id: 5, type: "update", Stime: 2000, },
+  { id: 6, type: "error", Stime: 800, },
+  { id: 7, type: "message", Stime: 1200, },
+  { id: 8, type: "alert", Stime: 600, },
 ];
 
 function Event(event) {
   return new Promise((resolve) => {
     setTimeout(() => {
       const realTime = Date.now() - startTime;
+      console.log("Evento disparado:", event.type);
       resolve({
-        number: event.number,
+        id: event.id,
         type: event.type,
-        time: event.time,
+        Stime: event.Stime,
         realTime: realTime,
       });
-    }, event.time);
+    }, event.Stime);
   });
 }
 
@@ -93,7 +62,7 @@ Event(events[0])
     results.push(result);
 
     console.log("Bitacora");
-    console.log(results);
+    console.table(results);
     const averageLatency = AverageLatency(results);
     console.log("Latencia Promedio:", averageLatency);
     const aboveLatencyEvents = getEventsAboveLatency(results, 180);
