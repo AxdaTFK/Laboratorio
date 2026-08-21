@@ -1,3 +1,4 @@
+const { AverageLatency, getEventsAboveLatency, getEventsAboveDeviation, getOutOfOrderEvents } = require("./Resultados.js");
 //Simulador de evento
 const tReferencia = Date.now();
 
