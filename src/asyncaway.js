@@ -1,194 +1,89 @@
-//Simulador de evento
-const tReferencia = Date.now();
+const { AverageLatency, getEventsAboveLatency, getEventsAboveDeviation, getOutOfOrderEvents } = require("./Resultados.js");
+const results = [];
 
-const eventos = [
-    { id: 1, tipo: 'iniciosesion', programado: tReferencia + 500, real: null },
-    { id: 2, tipo: 'descarga', programado: tReferencia + 1200, real: null },
-    { id: 3, tipo: 'notificacion', programado: tReferencia + 330, real: null },
-    { id: 4, tipo: 'cierre', programado: tReferencia + 450, real: null },
-    { id: 5, tipo: 'actualizacion', programado: tReferencia + 1000, real: null },
-    { id: 6, tipo: 'error', programado: tReferencia + 650, real: null },
-    { id: 7, tipo: 'mensaje', programado: tReferencia + 220, real: null },
-    { id: 8, tipo: 'alerta', programado: tReferencia + 580, real: null },
-]
+const startTime = Date.now();
 
-//Promesas 
-function promiseinicioSesion() {
-    return new Promise((resolve) => {
-        setTimeout(() => {
+const events = [
+  {
+    number: 1,
+    type: "Large Event",
+    time: 3000,
+  },
+  {
+    number: 2,
+    type: "Large Event",
+    time: 1000,
+  },
+  {
+    number: 3,
+    type: "Large Event",
+    time: 7000,
+  },
+  {
+    number: 4,
+    type: "Large Event",
+    time: 5000,
+  },
+  {
+    number: 5,
+    type: "Large Event",
+    time: 8000,
+  },
+  {
+    number: 6,
+    type: "Large Event",
+    time: 100,
+  },
+  {
+    number: 7,
+    type: "Large Event",
+    time: 300,
+  },
+  {
+    number: 8,
+    type: "Large Event",
+    time: 800,
+  },
+];
 
-            console.log('Evento disparado:', eventos[0].tipo);
+function processEvent(event) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const realTime = Date.now() - startTime;
 
-            resolve({
-                id: 'promiseinicioSesion',
-                tipo: eventos[0].tipo,
-                programado: eventos[0].programado,
-                real: Date.now(),
-            });
-        }, 500);
-    });
+      resolve({
+        number: event.number,
+        type: event.type,
+        time: event.time,
+        realTime: realTime,
+      });
+    }, event.time);
+  });
 }
 
-function promisedescarga() {
-    return new Promise((resolve) => {
-        setTimeout(() => {
+async function event() {
+  results.push(await processEvent(events[0]));
+  results.push(await processEvent(events[1]));
+  results.push(await processEvent(events[2]));
+  results.push(await processEvent(events[3]));
+  results.push(await processEvent(events[4]));
+  results.push(await processEvent(events[5]));
+  results.push(await processEvent(events[6]));
+  results.push(await processEvent(events[7]));
 
-            console.log('Evento disparado:', eventos[1].tipo);
+  console.log("Bitacora");
+  console.log(results);
 
-            resolve({
-                id: 'promisedescarga',
-                tipo: eventos[1].tipo,
-                programado: eventos[1].programado,
-                real: Date.now(),
-            });
-        }, 1200);
-    });
+  const averageLatency = AverageLatency(results);
+  console.log("Latencia Promedio:", averageLatency);
+  const aboveLatencyEvents = getEventsAboveLatency(results, 180);
+  console.log("Eventos por encima de la latencia:");
+  console.table(aboveLatencyEvents);
+  const aboveDeviationEvents = getEventsAboveDeviation(results, 50);
+  console.log("Eventos por encima de la desviación:");
+  console.table(aboveDeviationEvents);
+  const outOfOrderEvents = getOutOfOrderEvents(results);
+  console.log("Eventos fuera de orden:");
+  console.table(outOfOrderEvents);
 }
-
-function promisenotificacion() {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-
-            console.log('Evento disparado:', eventos[2].tipo);
-
-            resolve({
-                id: 'promisenotificacion',
-                tipo: eventos[2].tipo,
-                programado: eventos[2].programado,
-                real: Date.now(),
-            });
-        }, 330);
-    });
-}
-
-function promisecierre() {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-
-            console.log('Evento disparado:', eventos[3].tipo);
-
-            resolve({
-                id: 'promisecierre',
-                tipo: eventos[3].tipo,
-                programado: eventos[3].programado,
-                real: Date.now(),
-            });
-        }, 450);
-    });
-}
-
-function promiseactualizacion() {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-
-            console.log('Evento disparado:', eventos[4].tipo);
-
-            resolve({
-                id: 'promiseactualizacion',
-                tipo: eventos[4].tipo,
-                programado: eventos[4].programado,
-                real: Date.now(),
-            });
-        }, 1000);
-    });
-}
-
-function promiseerror() {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-
-            console.log('Evento disparado:', eventos[5].tipo);
-
-            resolve({
-                id: 'promiseerror',
-                tipo: eventos[5].tipo,
-                programado: eventos[5].programado,
-                real: Date.now(),
-            });
-        }, 650);
-    });
-}
-
-function promisemensaje() {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-
-            console.log('Evento disparado:', eventos[6].tipo);
-
-            resolve({
-                id: 'promisemensaje',
-                tipo: eventos[6].tipo,
-                programado: eventos[6].programado,
-                real: Date.now(),
-            });
-        }, 220);
-    });
-}
-
-function promisealerta() {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-
-            console.log('Evento disparado:', eventos[7].tipo);
-
-            resolve({
-                id: 'promisealerta',
-                tipo: eventos[7].tipo,
-                programado: eventos[7].programado,
-                real: Date.now(),
-            });
-        }, 580);
-    });
-}
-
-//AsyncAways
-
-async function runEventos() {
-    const registro = [];
-
-    registro.push(await promiseinicioSesion());
-    registro.push(await promisedescarga());
-    registro.push(await promisenotificacion());
-    registro.push(await promisecierre());
-    registro.push(await promiseactualizacion());
-    registro.push(await promiseerror());
-    registro.push(await promisemensaje());
-    registro.push(await promisealerta());
-
-    console.log('Todos los eventos han sido disparados:');
-    console.table(registro);
-
-    //Latencia
-    const Latencia = registro.reduce((acum, actual) => {
-        return acum + (actual.real - actual.programado);
-    }, 0);
-
-    const PromLatencia = Latencia / registro.length;
-    console.log('Latencia promedio:', PromLatencia, 'ms');
-
-    //Desvíos mayores a 200ms
-    const filtroEventos = registro.filter(eventos => {
-        return(eventos.real - eventos.programado) > 200;
-    })
-    console.log('Eventos de desvio mayor a 200');
-    console.table(filtroEventos);
-
-    const PrimerDesviacion = registro.find(eventos =>{
-        return eventos.real - eventos.programado > 200;
-    });
-
-    //Evento fueras de orden
-    let maxScheduleSoFar = -Infinity;
-
-    const FOEvento = registro.find((eventos =>{
-        if(eventos.programado < maxScheduleSoFar){
-            return true;
-        }
-
-        maxScheduleSoFar = Math.max(maxScheduleSoFar, eventos.programado);
-    }));
-
-    console.log('Primer evento fuera de orden:', FOEvento);
-}
-
-runEventos();
+event();
