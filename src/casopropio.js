@@ -48,6 +48,7 @@ async function event() {
 
     let libraryReady = false;
 
+    //Llamamos loadLibrary y requestSong al tiempo.
     const loading = processEvent(events[0], true)
         .then(result => {
             libraryReady = true;
@@ -72,7 +73,19 @@ async function event() {
         await processEvent(events[2], libraryReady)
     );
 
+    console.log("Bitácora");
     console.table(results);
+    const averageLatency = AverageLatency(results);
+    console.log("Latencia Promedio:", averageLatency);
+    const aboveLatencyEvents = getEventsAboveLatency(results, 180);
+    console.log("Eventos por encima de la latencia:",);
+    console.table(aboveLatencyEvents);
+    const aboveDeviationEvents = getEventsAboveDeviation(results, 50);
+    console.log("Eventos por encima de la desviación:",);
+    console.table(aboveDeviationEvents);
+    const outOfOrderEvents = getOutOfOrderEvents(results);
+    console.log("Eventos fuera de orden:",);
+    console.table(outOfOrderEvents);
 }
 
 event();
