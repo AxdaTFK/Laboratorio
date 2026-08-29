@@ -97,7 +97,7 @@ getlogIn((event1) => {
               getalert((event8) => {
                 results.push(event8);
 
-                console.log("Bitacora");
+                console.log("Bitácora");
                 console.table(results);
                 const averageLatency = AverageLatency(results);
                 console.log("Latencia Promedio:", averageLatency);

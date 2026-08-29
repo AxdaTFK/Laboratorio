@@ -3,6 +3,7 @@ const results = [];
 
 const startTime = Date.now();
 
+//Simulador de evento
 const events = [
   { id: 1, type: "LogIn", Stime: 500, },
   { id: 2, type: "Download", Stime: 1000, },
@@ -61,7 +62,7 @@ Event(events[0])
   .then((result) => {
     results.push(result);
 
-    console.log("Bitacora");
+    console.log("Bitácora");
     console.table(results);
     const averageLatency = AverageLatency(results);
     console.log("Latencia Promedio:", averageLatency);
