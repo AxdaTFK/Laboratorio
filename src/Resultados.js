@@ -1,3 +1,4 @@
+//Latencia Promedio
 function AverageLatency(results) {
     if (!results || results.length === 0) {
         return 0;
@@ -7,13 +8,7 @@ function AverageLatency(results) {
     }, 0);
     return totalLatency / results.length;
 }
-/////Latencia mayor al indicado
-function getEventsAboveLatency(results, threshold = 180) {
-    return results.filter((result) => {
-        return (result.realTime - result.Stime) > threshold;
-    });
-}
-//////latencia es mayor al límite indicado
+//////Latencia es mayor al límite indicado (Umbral definido =180) 
 function getEventsAboveDeviation(results, threshold = 50) {
     return results.filter((result) => {
         return (result.realTime - result.Stime) > threshold;
@@ -23,7 +18,7 @@ function getEventsAboveDeviation(results, threshold = 50) {
 function getOutOfOrderEvents(results) {
     let maxTime = -Infinity;
 
-    return results.filter((result) => {
+    return results.find((result) => {
         if (result.Stime < maxTime) {
             return true;
         }
@@ -33,7 +28,6 @@ function getOutOfOrderEvents(results) {
 }
 module.exports = {
     AverageLatency,
-    getEventsAboveLatency,
     getEventsAboveDeviation,
     getOutOfOrderEvents
 };

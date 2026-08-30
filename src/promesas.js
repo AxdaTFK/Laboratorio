@@ -1,4 +1,4 @@
-const { AverageLatency, getEventsAboveLatency, getEventsAboveDeviation, getOutOfOrderEvents } = require("./Resultados.js");
+const { AverageLatency, getEventsAboveDeviation, getOutOfOrderEvents } = require("./Resultados.js");
 const results = [];
 
 const startTime = Date.now();
@@ -66,13 +66,10 @@ Event(events[0])
     console.table(results);
     const averageLatency = AverageLatency(results);
     console.log("Latencia Promedio:", averageLatency);
-    const aboveLatencyEvents = getEventsAboveLatency(results, 180);
-    console.log("Eventos por encima de la latencia:", );
-    console.table(aboveLatencyEvents);
     const aboveDeviationEvents = getEventsAboveDeviation(results, 50);
     console.log("Eventos por encima de la desviación:", );
     console.table(aboveDeviationEvents);
     const outOfOrderEvents = getOutOfOrderEvents(results);
-    console.log("Eventos fuera de orden:", );
+    console.log("Evento fuera de orden:", );
     console.table(outOfOrderEvents);
   });
