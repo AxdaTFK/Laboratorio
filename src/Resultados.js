@@ -9,10 +9,12 @@ function AverageLatency(results) {
     return totalLatency / results.length;
 }
 //////Latencia es mayor al límite indicado (Umbral definido = 50) 
-function getEventsAboveDeviation(results, threshold = 50) {
-    return results.filter((result) => {
-        return (result.realTime - result.Stime) > threshold;
-    });
+function getEventsAboveDeviation(results, threshold = 50) { 
+    return results.map((result) => { 
+        if ((result.realTime - result.Stime) > threshold) { 
+            return result.id; 
+        } 
+    }); 
 }
 
 //////Eventos fuera de orden
