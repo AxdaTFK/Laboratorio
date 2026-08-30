@@ -20,7 +20,7 @@ function processEvent(event, libraryReady) {
 
             console.log("Evento disparado:", event.type);
 
-            if (event.type === "requestSong" && !libraryReady) {
+            if (event.type === ("requestSong" || "playSong") && !libraryReady) {
 
                 reject({
                     id: event.id,
