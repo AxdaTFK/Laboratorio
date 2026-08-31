@@ -8,12 +8,15 @@ function AverageLatency(results) {
     }, 0);
     return totalLatency / results.length;
 }
-//////Latencia es mayor al límite indicado (Umbral definido =180) 
-function getEventsAboveDeviation(results, threshold = 50) {
-    return results.filter((result) => {
-        return (result.realTime - result.Stime) > threshold;
-    });
+//////Latencia es mayor al límite indicado (Umbral definido = 50) 
+function getEventsAboveDeviation(results, threshold = 50) { 
+    return results.map((result) => { 
+        if ((result.realTime - result.Stime) > threshold) { 
+            return result.id; 
+        } 
+    }); 
 }
+
 //////Eventos fuera de orden
 function getOutOfOrderEvents(results) {
     let maxTime = -Infinity;
