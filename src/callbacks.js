@@ -1,4 +1,4 @@
-const { AverageLatency, getEventsAboveDeviation, getOutOfOrderEvents } = require("./Resultados.js");
+const { AverageLatency, getEventsAboveDeviation, getOutOfOrderEvents } = require("./Results.js");
 const results = [];
 
 //Simulador de evento 
